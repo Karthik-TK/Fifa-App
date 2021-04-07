@@ -1,6 +1,6 @@
 # Problem Statement
 
-Create a native android app, that displays FIFA player information in the *FIFA-21 Complete.csv* dataset in this repo.
+Create a web app, that displays FIFA player information in the *FIFA-21 Complete.csv* dataset in this repo.
 
 There's two moving parts to arriving at a potential solution - 
 
@@ -20,19 +20,19 @@ Updates to existing data in the db, should be as easily possible as creating the
 
 ## Frontend
 
-Develop an android app, that displays the FIFA player information, powered by the REST API's from the backend.
+Develop a react web app, that displays the FIFA player information, powered by the REST API's from the backend.
 
-Its not too important to have well-designed/gaudy/flashy layouts for the views, so long as the views are functional and performant.
+Have a way to create/update/delete/ player information in the web app.
 
-Displaying player information in the app, is sufficient for the scope of this problem statement. 
+Have a separate analytics section, that must have - 
+- A couple of visualizations in the dashboard representing/abstracting information in the FIFA player dataset, in a way you'd consider to be most effective 
+- Drilldown abilities in the dashboard visualizations
+- Ability to search/sort/filter data in a visualization **extra credits**
 
-However, creation/updation/deletion of player information is definitely **extra credits** !!
-
-**Extra credits** also for considering if the app seamlessly refreshes/updates the data, in the views, when the underlying data is updated/modified (via REST or directly in the db).
 
 ## Deployment
 
-Please have code for the backend and the app frontend, in separate folders in the same repo provided to you.
+Please have code for the backend and the web app frontend, in separate folders in the same repo provided to you.
 
 There is no need to deploy all this in cloud, so long as all of this works on localhost. 
 Please have instructions in a *deployment.md* file in your repo, that contains clear steps to have all of this up and running on local in that case.
