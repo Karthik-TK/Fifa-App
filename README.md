@@ -9,7 +9,8 @@ There's two moving parts to arriving at a potential solution -
 Develop REST APIs powered by one of the options, 
  - python -> django (preferred)
  - node -> express
-or in a language/framework of your choice
+ - or in a language/framework of your choice
+
 that essentially powers a CRUD interface via a REST API for the data in the FIFA dataset. 
 
 This CRUD layer should be seamlessly powered by an ORM interfaced with a SQL database (preferably Postgres, MySQL is fine as well). 
