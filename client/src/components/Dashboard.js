@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './charts/Chart';
+import Potential from './charts/Potential';
 import Total from './total/Total';
 import AvgAge from './total/AvgAge';
 import AvgHits from './total/AvgHits';
@@ -195,7 +196,7 @@ export default function Dashboard() {
             {/* Chart 2*/}
             <Grid item xs={12} md={8} lg={6}>
               <Paper className={fixedHeightPaper}>
-                <Chart />
+                <Potential />
               </Paper>
             </Grid>
             {/* FIFA - Top Potential Players */}

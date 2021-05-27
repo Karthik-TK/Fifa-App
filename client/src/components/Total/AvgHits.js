@@ -20,7 +20,7 @@ export default function AvgHits() {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title>Total FIFA Members</Title>
+            <Title>Average Hits</Title>
             <Typography component="p" variant="h4">
                 182
       </Typography>
