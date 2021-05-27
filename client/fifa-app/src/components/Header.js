@@ -2,9 +2,17 @@ import PropTypes from 'prop-types'
 
 const Header = ({ title }) => {
 
+  const mystyle = {
+    color: "white",
+    backgroundColor: "Black",
+    padding: "10px",
+    fontFamily: "Arial",
+    textAlign: "center"
+  };
+  
   return (
     <header className='header'>
-      <h1>{title}</h1>
+      <h1 style={mystyle}>{title}</h1>
     </header>
   )
 }
