@@ -18,11 +18,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Total from './Total/Total';
-import AvgAge from './Total/AvgAge';
-import AvgHits from './Total/AvgHits';
-import Countries from './Total/Countries';
+import Chart from './charts/Chart';
+import Total from './total/Total';
+import AvgAge from './total/AvgAge';
+import AvgHits from './total/AvgHits';
+import Countries from './total/Countries';
 import PotentialPlayers from './PotentialPlayers';
 
 const drawerWidth = 240;
