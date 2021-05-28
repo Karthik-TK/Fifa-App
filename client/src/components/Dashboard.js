@@ -77,6 +77,12 @@ export default function Dashboard() {
       <div className={classes.appBarSpacer} />
       <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={3}>
+          {/* Total Countries */}
+          <Grid item xs={12} md={4} lg={3}>
+            <Paper className={fixedHeightPaper}>
+              <Countries />
+            </Paper>
+          </Grid>
           {/* Total FIFA Members */}
           <Grid item xs={12} md={4} lg={3}>
             <Paper className={fixedHeightPaper}>
@@ -93,12 +99,6 @@ export default function Dashboard() {
           <Grid item xs={12} md={4} lg={3}>
             <Paper className={fixedHeightPaper}>
               <AvgHits />
-            </Paper>
-          </Grid>
-          {/* Total Countries */}
-          <Grid item xs={12} md={4} lg={3}>
-            <Paper className={fixedHeightPaper}>
-              <Countries />
             </Paper>
           </Grid>
           {/* Chart 1*/}

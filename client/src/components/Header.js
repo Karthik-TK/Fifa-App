@@ -197,9 +197,9 @@ export default function Header() {
           <Divider />
           {/* -------------------------------------SECONDARY LISTS---------------------------------- */}
           <List aria-label="secondary mailbox folders">
-            <ListItemLink to="/fifa-rank" primary="FIFA Rankings" icon={<SportsFootballIcon />} />
-            <ListItemLink to="/news" primary="Latest News" icon={<AnnouncementIcon />} />
-            <ListItemLink to="/covid" primary="COVID-19 Info" icon={<InfoIcon />} />
+            <ListItemLink rel="noopener" to="/fifa-rank" primary="FIFA Rankings" icon={<SportsFootballIcon />} />
+            <ListItemLink rel="noopener" to="/news" primary="Latest News" icon={<AnnouncementIcon />} />
+            <ListItemLink rel="noopener" to="/covid" primary="COVID-19 Info" icon={<InfoIcon />} />
           </List>
         </div>
       </Drawer>

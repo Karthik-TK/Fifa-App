@@ -2,6 +2,7 @@ import React from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import PublicIcon from '@material-ui/icons/Public';
 import Title from '../Title';
 
 function preventDefault(event) {
@@ -20,15 +21,15 @@ export default function Countries() {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title>Total Countries</Title>
-            <Typography component="p" variant="h4">
+            <Title><PublicIcon fontSize="large"/> Total Countries</Title>
+            <Typography component="p" variant="h3" style={{ display: "flex", justifyContent: "center", alignItems: "center", padding:"10px"}}>
                 35
       </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
                 on {date}
             </Typography>
             <div>
-                <Link color="primary" href="#" onClick={preventDefault}>
+                <Link color="primary" href="/reports" onClick={preventDefault}>
                     View All
         </Link>
             </div>

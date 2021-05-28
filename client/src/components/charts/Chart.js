@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
 import Title from '../Title';
 
 // Generate Sales Data
@@ -42,7 +43,7 @@ class Chart extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Title>Age vs Hits</Title>
+                <Title><ShowChartIcon fontSize="large"/> Age vs Hits</Title>
                 <ResponsiveContainer>
                     <LineChart
                         data={data}

@@ -6,6 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import GradeIcon from '@material-ui/icons/Grade';
 import Title from './Title';
 
 function preventDefault(event) {
@@ -34,7 +35,7 @@ class PotentialPlayers extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Title>FIFA - Top Potential Players</Title>
+        <Title> <GradeIcon fontSize="large"/> FIFA - Top Potential Players</Title>
         <Table size="small">
           <TableHead>
             <TableRow>

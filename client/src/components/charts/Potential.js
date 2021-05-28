@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import TimelineIcon from '@material-ui/icons/Timeline';
 import Title from '../Title';
 
 // Generate Sales Data
@@ -42,7 +43,7 @@ class Potential extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Title>Age vs Potential</Title>
+                <Title><TimelineIcon fontSize="large"/> Age vs Potential</Title>
                 <ResponsiveContainer>
                     <LineChart
                         data={data}

@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
+import { Button } from '@material-ui/core';
 
 
 class AddMember extends Component {
@@ -17,7 +18,7 @@ class AddMember extends Component {
             age: '',
             hits: '',
             potential: '',
-            team: 'react'
+            team: ''
         }
     }
 
@@ -40,43 +41,40 @@ class AddMember extends Component {
     }
 
     handleSubmit = event => {
-        alert(`${this.state.username} ${this.state.comments} ${this.state.topic}`)
+        alert(`${this.state.name} ${this.state.nationality} ${this.state.age}`)
         event.preventDefault()
     }
 
     render() {
-        const { username, comments, topic } = this.state
+        const {
+            player_id,
+            name,
+            nationality,
+            position,
+            overall,
+            age,
+            hits,
+            potential,
+            team } = this.state
 
         return (
-            <div className="AddMember" style={{margin: '60px 10px 10px 10px'}}>
-                <main className="Member" style={{margin: '60px 10px 10px 10px'}}>
-                    <div className="appMember" style={{margin: '50px 10px 10px 10px'}} />
-                    <Container maxWidth="lg" className="container" style={{margin: '50px 10px 10px 10px'}}>
-                        <form onSubmit={this.handleSubmit}>
-                            <div>
-                                <label>Username </label>
-                                <input
-                                    type="text"
-                                    value={username}
-                                    onChange={this.handleUsernameChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Comments</label>
-                                <textarea
-                                    value={comments}
-                                    onChange={this.handleCommentsChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Topic</label>
-                                <select value={topic} onChange={this.handleTopicChange}>
-                                    <option value="react">React</option>
-                                    <option value="angular">Angular</option>
-                                    <option value="vue">Vue</option>
-                                </select>
-                            </div>
-                            <button type="submit">Submit</button>
+            <div className="AddMember" style={{ margin: '60px 10px 10px 10px' }}>
+                <main className="Member" style={{ margin: '60px 10px 10px 10px' }}>
+                    <div className="appMember" style={{ margin: '50px 10px 10px 10px' }} />
+                    <Container maxWidth="lg" className="container" style={{ margin: '50px 10px 10px 10px' }}>
+                        <form className="root" noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+                            <h1>Add New Players Information</h1>
+                            <TextField id="player_id" label="Player ID" type="number" variant="outlined" /><br></br>
+                            <TextField id="name" label="Name" variant="outlined" /><br></br>
+                            <TextField id="nationality" label="Nationality" variant="outlined" /><br></br>
+                            <TextField id="position" label="Position" variant="outlined" /><br></br>
+                            <TextField id="overall" label="Overall" type="number" variant="outlined" /><br></br>
+                            <TextField id="age" label="Age" type="number" variant="outlined" /><br></br>
+                            <TextField id="hits" label="Hits" type="number" variant="outlined" /><br></br>
+                            <TextField id="potential" label="Potential" type="number" variant="outlined" /><br></br>
+                            <TextField id="team" label="Team" variant="outlined" /><br></br>
+
+                            <Button type="submit">Submit</Button>
                         </form>
                     </Container>
                 </main>
