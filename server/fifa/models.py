@@ -15,4 +15,4 @@ class Fifa(models.Model):
     team = models.CharField(max_length=120)
 
     def _str_(self):
-        return self.title
+        return self.name
