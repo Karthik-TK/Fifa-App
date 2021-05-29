@@ -21,18 +21,13 @@ export default function Total() {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title><GroupIcon fontSize="large"/> Total Members</Title>
-            <Typography component="p" variant="h3" style={{ display: "flex", justifyContent: "center", alignItems: "center", padding:"10px"}}>
+            <Title><GroupIcon fontSize="large" /> Total Members</Title>
+            <Typography component="p" variant="h2" style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "10px" }}>
                 17,982
-      </Typography>
+            </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
                 on {date}
             </Typography>
-            <div>
-                <Link color="primary" href="/members" onClick={preventDefault}>
-                    View All
-        </Link>
-            </div>
         </React.Fragment>
     );
 }

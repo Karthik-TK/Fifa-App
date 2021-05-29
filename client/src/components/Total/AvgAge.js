@@ -22,18 +22,13 @@ export default function AvgAge() {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title><PermContactCalendarIcon fontSize="large"/> Average Age</Title>
-            <Typography component="p" variant="h3" style={{ display: "flex", justifyContent: "center", alignItems: "center", padding:"10px"}}>
+            <Title><PermContactCalendarIcon fontSize="large" /> Average Age</Title>
+            <Typography component="p" variant="h2" style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "10px" }}>
                 30
       </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
                 on {date}
             </Typography>
-            <div>
-                <Link color="primary" href="/reports" onClick={preventDefault}>
-                    View All
-        </Link>
-            </div>
         </React.Fragment>
     );
 }

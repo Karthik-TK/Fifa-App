@@ -1,16 +1,19 @@
 import React from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Nationality from './Nationality';
-import BarChart from './BarChart';
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
+    },
+    toolbarIcon: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 8px',
+        ...theme.mixins.toolbar,
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -18,6 +21,12 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
+    },
+    menuButton: {
+        marginRight: 36,
+    },
+    menuButtonHidden: {
+        display: 'none',
     },
     title: {
         flexGrow: 1,
@@ -39,36 +48,30 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     fixedHeight: {
-        height: 'auto',
+        height: 240,
     },
 }));
 
-export default function Main() {
-
+export const ImportExport = () => {
     const classes = useStyles();
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
     return (
         <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Container maxWidth="lg" className={classes.container}>
-                <Typography variant="h4" component="div" gutterBottom>
-                    Reports
+                <div>
+                    <Typography variant="h4" component="div" gutterBottom>
+                        Export Data
+                </Typography>
+                    <Typography variant="caption" display="block" gutterBottom>
+                        Click to export all the FIFA Players data as a .csv file
                     </Typography>
-                <Grid container spacing={3}>
-                    {/* Nationality*/}
-                    <Grid item xs={12} md={10} lg={8}>
-                        <Paper className={fixedHeightPaper}>
-                            <Nationality />
-                        </Paper>
-                    </Grid>
-                    {/* Chart 2*/}
-                    <Grid item xs={12} md={10} lg={8}>
-                        <Paper className={fixedHeightPaper}>
-                            <BarChart />
-                        </Paper>
-                    </Grid>
-                </Grid>
+                </div>
+                <label htmlFor="contained-button-file" style={{ display: "flex", justifyContent: "center", alignItems: "center", margin:'60px'}}>
+                    <input accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel*" id="contained-button-file" multiple type="file" style={{ display: 'none' }} />
+                    <Button variant="contained" component="span" color="primary">
+                        Export Data
+                    </Button>
+                </label>
             </Container>
         </main>
     )

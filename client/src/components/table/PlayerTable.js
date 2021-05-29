@@ -3,6 +3,7 @@ import { useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect } fro
 import MOCK_DATA from './MOCK_DATA.json';
 import { COLUMNS } from './columns';
 import './table.css';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -14,7 +15,6 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { GlobalFilter } from './GlobalFilter';
 
@@ -123,6 +123,12 @@ export const PlayerTable = () => {
             <div className={classes.appBarSpacer} />
             <Container maxWidth="lg" className={classes.container}>
                 <>
+                    <Typography variant="h4" component="div" gutterBottom>
+                        FIFA Players
+                    </Typography>
+                    <Typography variant="caption" display="block" gutterBottom>
+                        Click on the Header rows to sort the respective columns ascending and decesending order.
+                    </Typography>
                     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
                     <table {...getTableProps()}>
                         <thead>
@@ -168,9 +174,9 @@ export const PlayerTable = () => {
                         </code>
                     </pre> */}
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
-                        <Button ariant="contained" color="primary m-2" onClick={() => gotoPage(0)} disabled={!canPreviousPage}><SkipPreviousIcon /></Button>
-                        <Button ariant="contained" color="primary m-2" onClick={() => previousPage()} disabled={!canPreviousPage}><ArrowBackIosIcon /></Button>
                         <span style={{ padding: "20px" }}>
+                        <Button ariant="contained" color="primary" onClick={() => gotoPage(0)} disabled={!canPreviousPage}><SkipPreviousIcon /></Button>
+                        <Button ariant="contained" color="primary" onClick={() => previousPage()} disabled={!canPreviousPage}><ArrowBackIosIcon /></Button>
                             <strong>
                                 Page{' '}
                                 {pageIndex + 1} of {pageOptions.length}
@@ -185,22 +191,23 @@ export const PlayerTable = () => {
                                 }}
                                 style={{ padding: '0px', width: '50px', height: '20px' }}
                             />
-                        </span>
-                        <Button ariant="contained" color="primary m-2" onClick={() => nextPage()} disabled={!canNextPage}><ArrowForwardIosIcon /></Button>
-                        <Button ariant="contained" color="primary m-2" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}><SkipNextIcon /></Button>
+                        <Button ariant="contained" color="primary" onClick={() => nextPage()} disabled={!canNextPage}><ArrowForwardIosIcon /></Button>
+                        <Button ariant="contained" color="primary" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}><SkipNextIcon /></Button>
 
-                        <InputLabel id="demo-simple-select-label">Page Size</InputLabel>
+                        <strong>Page Size:{' '}</strong>
                         <Select
                             id="demo-simple-select-outlined"
                             value={pageSize}
+                            style={{ padding: '0px', width: '50px', height: '20px' }}
                             onChange={(e => setPageSize(Number(e.target.value)))}
-                        >
+                            >
                             {
-                                [10, 25, 50, 100].map(pageSize => (
+                                [10, 25, 50].map(pageSize => (
                                     <MenuItem key={pageSize} value={pageSize}>{pageSize}</MenuItem>
-                                ))
-                            }
+                                    ))
+                                }
                         </Select>
+                                </span>
                     </div>
                 </>
             </Container>

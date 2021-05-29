@@ -21,18 +21,13 @@ export default function Countries() {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title><PublicIcon fontSize="large"/> Total Countries</Title>
-            <Typography component="p" variant="h3" style={{ display: "flex", justifyContent: "center", alignItems: "center", padding:"10px"}}>
+            <Title><PublicIcon fontSize="large" /> Total Countries</Title>
+            <Typography component="p" variant="h2" style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "10px" }}>
                 35
       </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
                 on {date}
             </Typography>
-            <div>
-                <Link color="primary" href="/reports" onClick={preventDefault}>
-                    View All
-        </Link>
-            </div>
         </React.Fragment>
     );
 }

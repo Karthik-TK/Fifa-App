@@ -30,6 +30,7 @@ import { Link, Switch, Route } from 'react-router-dom';
 import Main from './charts/Main';
 import Dashboard from './Dashboard';
 import { PlayerTable } from './table/PlayerTable';
+import { ImportExport } from './export/ImportExport';
 
 const drawerWidth = 240;
 
@@ -208,7 +209,7 @@ export default function Header() {
         <Route path="/add" component={AddMember}></Route>
         <Route path="/reports" component={Main}></Route>
         <Route path="/members" component={PlayerTable}></Route>
-        <Route path="/export" component={PlayerTable}></Route>
+        <Route path="/export" component={ImportExport}></Route>
         <Route path='/fifa-rank' component={() => {
           window.location.replace('https://www.fifa.com/fifa-world-ranking/');
           return null;
