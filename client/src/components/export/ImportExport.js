@@ -52,8 +52,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export const ImportExport = () => {
     const classes = useStyles();
+
+    const routeChange = () => {
+        window.location.href = 'http://localhost:8000/download';
+    }
     return (
         <main className={classes.content}>
             <div className={classes.appBarSpacer} />
@@ -66,9 +71,9 @@ export const ImportExport = () => {
                         Click to export all the FIFA Players data as a .csv file
                     </Typography>
                 </div>
-                <label htmlFor="contained-button-file" style={{ display: "flex", justifyContent: "center", alignItems: "center", margin:'60px'}}>
+                <label htmlFor="contained-button-file" style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: '60px' }}>
                     <input accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel*" id="contained-button-file" multiple type="file" style={{ display: 'none' }} />
-                    <Button variant="contained" component="span" color="primary">
+                    <Button onClick={routeChange} variant="contained" component="span" color="primary">
                         Export Data
                     </Button>
                 </label>

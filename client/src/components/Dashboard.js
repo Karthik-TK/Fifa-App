@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Chart from './charts/Chart';
+import Chart from './charts/Hits';
 import Potential from './charts/Potential';
 import Total from './total/Total';
 import AvgAge from './total/AvgAge';
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height: 'auto',
   },
 }));
 

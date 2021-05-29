@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import TimelineIcon from '@material-ui/icons/Timeline';
+import { Bar } from 'react-chartjs-2';
 import Title from '../Title';
-import { Line } from 'react-chartjs-2';
 
-function Potential() {
+function HitsChart() {
 
     const [graph, setPosts] = useState([])
     useEffect(() => {
@@ -18,15 +17,15 @@ function Potential() {
     }, [])
 
     const data = {
-        labels: graph.map(i => i.age),
+        labels: graph.map(i => i.name),
         datasets: [
             {
-                label: 'Potential',
-                data: graph.map(i => i.potential),
-                borderColor: ['rgba(63, 81, 181, 0.2)'],
-                backgroundColor: ['rgba(63, 81, 181, 0.2)'],
-                pointBackgroundColor: ['rgba(63, 81, 181, 0.2)'],
-                pointBorderColor: ['rgba(63, 81, 181, 0.2)']
+                label: 'Hits',
+                data: graph.map(i => i.hits),
+                borderColor: ['rgba(54, 162, 235, 0.2)'],
+                backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+                pointBackgroundColor: ['rgba(54, 162, 235, 0.2)'],
+                pointBorderColor: ['rgba(54, 162, 235, 0.2)']
             }
         ]
     };
@@ -34,7 +33,7 @@ function Potential() {
     const options = {
         title: {
             display: true,
-            text: 'Age vs Potential'
+            text: 'Hits Chart'
         },
         scales: {
             yAxes: [
@@ -52,10 +51,10 @@ function Potential() {
 
     return (
         <React.Fragment>
-            <Title><TimelineIcon fontSize="large" /> Age vs Potential</Title>
-            <Line data={data} options={options} />
+            <Title>Players Hits</Title>
+            <Bar data={data} options={options} />
         </React.Fragment>
-    );
+    )
 }
 
-export default Potential;
+export default HitsChart

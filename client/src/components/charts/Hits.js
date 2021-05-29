@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import TimelineIcon from '@material-ui/icons/Timeline';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
 import Title from '../Title';
 import { Line } from 'react-chartjs-2';
 
-function Potential() {
+// Generate Sales Data
+function Chart() {
 
     const [graph, setPosts] = useState([])
     useEffect(() => {
@@ -21,8 +22,8 @@ function Potential() {
         labels: graph.map(i => i.age),
         datasets: [
             {
-                label: 'Potential',
-                data: graph.map(i => i.potential),
+                label: 'Hits',
+                data: graph.map(i => i.hits),
                 borderColor: ['rgba(63, 81, 181, 0.2)'],
                 backgroundColor: ['rgba(63, 81, 181, 0.2)'],
                 pointBackgroundColor: ['rgba(63, 81, 181, 0.2)'],
@@ -34,7 +35,7 @@ function Potential() {
     const options = {
         title: {
             display: true,
-            text: 'Age vs Potential'
+            text: 'Age vs Hits'
         },
         scales: {
             yAxes: [
@@ -52,10 +53,10 @@ function Potential() {
 
     return (
         <React.Fragment>
-            <Title><TimelineIcon fontSize="large" /> Age vs Potential</Title>
+            <Title><ShowChartIcon fontSize="large" /> Age vs Hits</Title>
             <Line data={data} options={options} />
         </React.Fragment>
     );
 }
 
-export default Potential;
+export default Chart;

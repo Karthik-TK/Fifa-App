@@ -5,8 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Nationality from './Nationality';
-import BarChart from './BarChart';
+import AgeChart from './AgeChart';
+import BarChart from './OverallChart';
+import PotentialChart from './PoentialChart';
+import HitsChart from './HitsChart';
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -57,15 +59,27 @@ export default function Main() {
                     </Typography>
                 <Grid container spacing={3}>
                     {/* Nationality*/}
-                    <Grid item xs={12} md={10} lg={8}>
+                    <Grid item xs={12} md={8} lg={6}>
                         <Paper className={fixedHeightPaper}>
-                            <Nationality />
+                            <AgeChart />
                         </Paper>
                     </Grid>
-                    {/* Chart 2*/}
-                    <Grid item xs={12} md={10} lg={8}>
+                    {/* Overall */}
+                    <Grid item xs={12} md={8} lg={6}>
                         <Paper className={fixedHeightPaper}>
                             <BarChart />
+                        </Paper>
+                    </Grid>
+                    {/* Potential */}
+                    <Grid item xs={12} md={8} lg={6}>
+                        <Paper className={fixedHeightPaper}>
+                            <PotentialChart />
+                        </Paper>
+                    </Grid>
+                    {/* Hits */}
+                    <Grid item xs={12} md={8} lg={6}>
+                        <Paper className={fixedHeightPaper}>
+                            <HitsChart />
                         </Paper>
                     </Grid>
                 </Grid>

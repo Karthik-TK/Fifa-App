@@ -24,6 +24,8 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import SportsFootballIcon from '@material-ui/icons/SportsFootball';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import InfoIcon from '@material-ui/icons/Info';
 import AddMember from './forms/AddMember';
 import { Link, Switch, Route } from 'react-router-dom';
@@ -31,6 +33,8 @@ import Main from './charts/Main';
 import Dashboard from './Dashboard';
 import { PlayerTable } from './table/PlayerTable';
 import { ImportExport } from './export/ImportExport';
+import { EditMember } from './forms/EditMember';
+import { RowSelection } from './table/RowSelection';
 
 const drawerWidth = 240;
 
@@ -193,6 +197,8 @@ export default function Header() {
             <ListItemLink to="/members" primary="Members" icon={<AssignmentIndIcon />} />
             <ListItemLink to="/reports" primary="Reports" icon={<BarChartIcon />} />
             <ListItemLink to="/add" primary="Add Players" icon={<PersonAddIcon />} />
+            <ListItemLink to="/edit" primary="Edit Players" icon={<EditIcon />} />
+            <ListItemLink to="/delete" primary="Delete Players" icon={<DeleteIcon />} />
             <ListItemLink to="/export" primary="Export Data" icon={<ImportExportIcon />} />
           </List>
           <Divider />
@@ -207,9 +213,12 @@ export default function Header() {
       <Switch>
         <Route exact path="/" component={Dashboard}></Route>
         <Route path="/add" component={AddMember}></Route>
+        <Route path="/edit" component={PlayerTable}></Route>
+        <Route path="/delete" component={RowSelection}></Route>
         <Route path="/reports" component={Main}></Route>
         <Route path="/members" component={PlayerTable}></Route>
         <Route path="/export" component={ImportExport}></Route>
+        <Route path="/fifa/:id/edit/" component={EditMember} />
         <Route path='/fifa-rank' component={() => {
           window.location.replace('https://www.fifa.com/fifa-world-ranking/');
           return null;
