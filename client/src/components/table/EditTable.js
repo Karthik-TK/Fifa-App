@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useMemo } from 'react';
 import { useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect } from 'react-table';
 import MOCK_DATA from './MOCK_DATA.json';
@@ -18,6 +17,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { GlobalFilter } from './GlobalFilter';
+import { Checkbox } from './Checkbox';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -70,22 +71,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const PlayerTable = () => {
+export const EditTable = () => {
 
     const classes = useStyles();
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => MOCK_DATA, [])
-
-    // const [tab, setTable] = useState([])
-    // useEffect(() => {
-    //     axios.get('http://localhost:8000/api/fifa/')
-    //         .then(res => {
-    //             setTable(res.data)
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //         })
-    // }, [])
 
     const {
         getTableProps,
@@ -136,10 +126,10 @@ export const PlayerTable = () => {
             <Container maxWidth="lg" className={classes.container}>
                 <>
                     <Typography variant="h4" component="div" gutterBottom>
-                        FIFA Players
+                        Edit Players
                     </Typography>
                     <Typography variant="caption" display="block" gutterBottom>
-                        Click on the Header rows to sort the respective columns ascending and decesending order.
+                        click on the players to edit.
                     </Typography>
                     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
                     <table {...getTableProps()}>

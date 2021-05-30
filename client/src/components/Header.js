@@ -35,6 +35,7 @@ import { PlayerTable } from './table/PlayerTable';
 import { ImportExport } from './export/ImportExport';
 import { EditMember } from './forms/EditMember';
 import { RowSelection } from './table/RowSelection';
+import { EditTable } from './table/EditTable';
 
 const drawerWidth = 240;
 
@@ -213,12 +214,11 @@ export default function Header() {
       <Switch>
         <Route exact path="/" component={Dashboard}></Route>
         <Route path="/add" component={AddMember}></Route>
-        <Route path="/edit" component={PlayerTable}></Route>
+        <Route path="/edit" component={EditTable}></Route>
         <Route path="/delete" component={RowSelection}></Route>
         <Route path="/reports" component={Main}></Route>
         <Route path="/members" component={PlayerTable}></Route>
         <Route path="/export" component={ImportExport}></Route>
-        <Route path="/fifa/:id/edit/" component={EditMember} />
         <Route path='/fifa-rank' component={() => {
           window.location.replace('https://www.fifa.com/fifa-world-ranking/');
           return null;

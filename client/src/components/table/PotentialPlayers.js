@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import GradeIcon from '@material-ui/icons/Grade';
-import Title from './Title';
+import Title from './../Title';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -59,7 +59,7 @@ class PotentialPlayers extends React.Component {
           </TableBody>
         </Table>
         <div className='seeMore' style={{marginTop: '24px'}}>
-          <Link color="primary" href="#" onClick={preventDefault}>
+          <Link color="primary" href="/members">
             See more classifications
               </Link>
         </div>

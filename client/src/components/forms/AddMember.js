@@ -39,7 +39,7 @@ class AddMember extends Component {
             })
             .catch(error => {
                 console.log(error)
-                toast.error('Enter all Details', { position: toast.POSITION.TOP_CENTER, autoClose:false })
+                toast.error('Enter all Details', { position: toast.POSITION.TOP_CENTER, autoClose: false })
             })
     }
 
@@ -56,10 +56,9 @@ class AddMember extends Component {
             team } = this.state
 
         return (
-
-            <main className="Member" style={{ margin: '45px 0px 10px 0px' }}>
-                <div className="appMember" style={{ margin: '40px 0px 10px 0px' }} />
-                <Container maxWidth="lg" className="container" style={{ margin: '50px 10px 10px 10px' }}>
+            <main className="Member" style={{ flexGrow: 1, height: '100vh', overflow: 'auto' }}>
+                <div className="appMember" style={{ height: '64px' }} />
+                <Container maxWidth="lg" className="container" style={{ paddingTop: '32px', paddingBottom: '32px' }}>
                     <Typography variant="h4" component="div" gutterBottom>
                         Add New Players
                     </Typography>

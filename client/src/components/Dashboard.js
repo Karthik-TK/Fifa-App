@@ -11,7 +11,7 @@ import Total from './total/Total';
 import AvgAge from './total/AvgAge';
 import AvgHits from './total/AvgHits';
 import Countries from './total/Countries';
-import PotentialPlayers from './PotentialPlayers';
+import PotentialPlayers from './table/PotentialPlayers';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
