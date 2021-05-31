@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const EditTable = () => {
+export const MainTable = () => {
 
     const classes = useStyles();
     const columns = useMemo(() => COLUMNS, [])

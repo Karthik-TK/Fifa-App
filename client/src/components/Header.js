@@ -29,13 +29,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import InfoIcon from '@material-ui/icons/Info';
 import AddMember from './forms/AddMember';
 import { Link, Switch, Route } from 'react-router-dom';
-import Main from './charts/Main';
+import MainCharts from './charts/MainCharts';
 import Dashboard from './Dashboard';
 import { PlayerTable } from './table/PlayerTable';
 import { ImportExport } from './export/ImportExport';
-import { EditMember } from './forms/EditMember';
-import { RowSelection } from './table/RowSelection';
-import { EditTable } from './table/EditTable';
+import EditMember from './table/EditMember';
+import { DeleteTable } from './table/DeleteTable';
 
 const drawerWidth = 240;
 
@@ -214,9 +213,9 @@ export default function Header() {
       <Switch>
         <Route exact path="/" component={Dashboard}></Route>
         <Route path="/add" component={AddMember}></Route>
-        <Route path="/edit" component={EditTable}></Route>
-        <Route path="/delete" component={RowSelection}></Route>
-        <Route path="/reports" component={Main}></Route>
+        <Route path="/delete" component={DeleteTable}></Route>
+        <Route path="/edit" component={EditMember}></Route>
+        <Route path="/reports" component={MainCharts}></Route>
         <Route path="/members" component={PlayerTable}></Route>
         <Route path="/export" component={ImportExport}></Route>
         <Route path='/fifa-rank' component={() => {

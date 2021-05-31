@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Main() {
+export default function MainCharts() {
 
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
