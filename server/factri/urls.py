@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from routers import router
-from fifa.views import download
+from fifa.views import download, upload
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include((router.urls, 'factri'), namespace='factri')),
-    path('download', download, name='download')
+    path('download', download, name='download'),
+    path('upload', upload, name='upload')
 ]

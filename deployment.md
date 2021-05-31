@@ -19,8 +19,13 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Enter the below commands for starting the client local server in the project directory '/server':
 
-1. ### `python manage.py runserver`
+1. ### `pip install -r requirements.txt`
+Install all the dependencies
 
+2. ### `python manage.py runserver`
 
 Runs the app in the development mode.<br />
-Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
+<ul>
+<li>Open [http://localhost:8000](http://localhost:8000) to view it in the browser.</li>
+<li>Open [http://localhost:8000/upload](http://localhost:8000/upload) to upload csv data files.</li>
+</ul>

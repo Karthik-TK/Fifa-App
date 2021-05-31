@@ -16,3 +16,37 @@ def download(request):
 
     response['Content-Disposition'] = 'attachment; filename="fifa.csv"'
     return response
+
+
+
+def upload(request):
+    template = 'data_upload.html'
+
+    prompt = {
+        'order' : 'Order of the CSV should be player_id; name; nationality; position; overall; age; hits; potential; team'
+    }
+
+    if request.method == "GET":
+        return render(request, template, prompt)
+
+    csv_file = request.FILES['file']
+    if not csv_file.name.endswith('.csv'):
+        messages.error(request, 'File format is not a csv')
+
+    data_set = csv_file.read().decode('UTF-8')
+    io_string = io.StringIO(data_set)
+    next(io_string)
+    for column in csv.reader(io_string, delimiter=';', quotechar="|"):
+        _, created = Fifa.objects.update_or_create(
+            player_id=column[0],
+            name=column[1],
+            nationality=column[2],
+            position=column[3],
+            overall=column[4],
+            age=column[5],
+            hits=column[6],
+            potential=column[7],
+            team=column[8],
+        )
+    context = {}
+    return render(request, template, context)
