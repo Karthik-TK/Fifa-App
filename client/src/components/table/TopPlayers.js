@@ -1,26 +1,12 @@
 import axios from 'axios';
-import React, { useState, useEffect, useMemo } from 'react';
-import { useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect } from 'react-table';
-import MOCK_DATA from './MOCK_DATA.json';
+import React, { useState, useEffect } from 'react';
+import { useTable, useGlobalFilter, useRowSelect } from 'react-table';
 import { COLUMNS } from './columns';
 import './table.css';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { GlobalFilter } from './GlobalFilter';
 import GradeIcon from '@material-ui/icons/Grade';
 import Title from '../Title';
-import { Checkbox } from './Checkbox';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -81,9 +67,6 @@ function Table({ columns, data }) {
         headerGroups,
         rows,
         prepareRow,
-        selectedFlatRows,
-        state,
-        setGlobalFilter,
     } = useTable({
         columns,
         data,
@@ -102,108 +85,47 @@ function Table({ columns, data }) {
 
     return (
         <React.Fragment>
-        <Title> <GradeIcon fontSize="large" /> FIFA - Top 10 Players</Title>
-        {/* <main className={classes.content}>
-            <div className={classes.appBarSpacer} /> */}
+            <Title> <GradeIcon fontSize="large" /> FIFA - Top 10 Players</Title>
             <Container maxWidth="lg" className={classes.container}>
-                {/* <> */}
-                    <table {...getTableProps()}>
-                        <thead>
-                            {headerGroups.map((headerGroup) => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map((column) => (
-                                        <th {...column.getHeaderProps()}>
-                                            {column.render('Header')}
-                                        </th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {
-                                firstPageRows.map(row => {
-                                    prepareRow(row)
-                                    return (
-                                        <tr {...row.getRowProps()}>
-                                            {
-                                                row.cells.map((cell) => {
-                                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                                })
-                                            }
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
-                {/* </> */}
+                <table {...getTableProps()}>
+                    <thead>
+                        {headerGroups.map((headerGroup) => (
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map((column) => (
+                                    <th {...column.getHeaderProps()}>
+                                        {column.render('Header')}
+                                    </th>
+                                ))}
+                            </tr>
+                        ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                        {
+                            firstPageRows.map(row => {
+                                prepareRow(row)
+                                return (
+                                    <tr {...row.getRowProps()}>
+                                        {
+                                            row.cells.map((cell) => {
+                                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                            })
+                                        }
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
             </Container >
-        {/* </main > */}
         </React.Fragment>
     )
 }
 
 
-
 function TopPlayers() {
 
-    // const [tab, setTable] = useState([])
-    // useEffect(() => {
-    //     axios.get('http://localhost:8000/api/fifa/')
-    //         .then(res => {
-    //             setTable(res.data)
-    //             convert(res.data)
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //         })
-    // }, [])
-
-    // function convert(val) {
-    //     console.log("val :", val)
-    //     console.log("tab :", tab.map(i => i))
-    // }
-    // const columns = useMemo(() => COLUMNS, [])
-    // const data = useMemo(() => tab, [])
-
-    // const {
-    //     getTableProps,
-    //     getTableBodyProps,
-    //     headerGroups,
-    //     page,
-    // nextPage,
-    // previousPage,
-    // canNextPage,
-    // canPreviousPage,
-    // pageOptions,
-    // gotoPage,
-    // pageCount,
-    // setPageSize,
-    // selectedFlatrows,
-    // prepareRow,
-    // state,
-    // setGlobalFilter,
-    // } = useTable({
-    //     columns,
-    //     data,
-    //     initialState: {
-    //         pageIndex: 0,
-    //         sortBy: [
-    //             {
-    //                 id: 'columnId',
-    //                 desc: false
-    //             }
-    //         ]
-    //     }
-    // }, useSortBy
-    // )
-
-    // const { globalFilter, pageIndex, pageSize } = state
-
     const [data, setData] = useState([]);
-    // const [skipPageReset, setSkipPageReset] = React.useState(false)
     const columns = React.useMemo(() => COLUMNS, [])
-    // const [data, setData] = React.useState(() => MOCK_DATA, [])
     useEffect(() => {
         (async () => {
             const result = await axios("http://localhost:8000/api/fifa/");
@@ -213,9 +135,7 @@ function TopPlayers() {
 
     return (
         <Table columns={columns} data={data} />
-
     )
-
 }
 
 export default TopPlayers

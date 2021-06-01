@@ -73,7 +73,7 @@ function Table({ columns, data }) {
         headerGroups,
         rows,
         prepareRow,
-        selectedFlatRows,
+        // selectedFlatRows,
         state,
         setGlobalFilter,
     } = useTable({

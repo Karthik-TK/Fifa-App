@@ -31,7 +31,7 @@ import AddMember from './forms/AddMember';
 import { Link, Switch, Route } from 'react-router-dom';
 import MainCharts from './charts/MainCharts';
 import Dashboard from './Dashboard';
-import { PlayerTable } from './table/PlayerTable';
+import PlayerTable from './table/PlayerTable';
 import { ImportExport } from './export/ImportExport';
 import EditMember from './table/EditMember';
 import DeleteTable from './table/DeleteTable';

@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React, { useMemo } from 'react';
-import { useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect } from 'react-table';
-import MOCK_DATA from './MOCK_DATA.json';
+import React, { useEffect, useState } from 'react';
+import { useTable, useGlobalFilter, useSortBy, usePagination } from 'react-table';
 import { COLUMNS } from './columns';
 import './table.css';
 import Typography from '@material-ui/core/Typography';
@@ -70,23 +69,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const PlayerTable = () => {
+function Table({ columns, data }) {
 
     const classes = useStyles();
-    const columns = useMemo(() => COLUMNS, [])
-    const data = useMemo(() => MOCK_DATA, [])
-
-    // const [tab, setTable] = useState([])
-    // useEffect(() => {
-    //     axios.get('http://localhost:8000/api/fifa/')
-    //         .then(res => {
-    //             setTable(res.data)
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //         })
-    // }, [])
-
     const {
         getTableProps,
         getTableBodyProps,
@@ -100,7 +85,6 @@ export const PlayerTable = () => {
         gotoPage,
         pageCount,
         setPageSize,
-        // selectedFlatrows,
         prepareRow,
         state,
         setGlobalFilter,
@@ -108,25 +92,7 @@ export const PlayerTable = () => {
         columns,
         data,
         initialState: { pageIndex: 0 }
-    }, useGlobalFilter, useSortBy, usePagination,
-        // useRowSelect,
-        // (hooks) => {
-        //     hooks.visibleColumns.push((columns) => {
-        //         return [
-        //             {
-        //                 id: 'selection',
-        //                 Header: ({ getToggleAllRowsSelectedProps }) => (
-        //                     <CheckBox {...getToggleAllRowsSelectedProps()} />
-        //                 ),
-        //                 Cell: ({ row }) => (
-        //                     <CheckBox {...row.getToggleAllRowsSelectedProps} />
-        //                 )
-        //             },
-        //             ...columns
-        //         ]
-        //     })
-        // }
-    )
+    }, useGlobalFilter, useSortBy, usePagination)
 
     const { globalFilter, pageIndex, pageSize } = state
 
@@ -174,21 +140,10 @@ export const PlayerTable = () => {
                             }
                         </tbody>
                     </table>
-                    {/* <pre>
-                        <code>
-                            {JSON.stringify(
-                                {
-                                    selectedFlatrows: selectedFlatrows.map((row) => row.original),
-                                },
-                                null,
-                                2
-                            )}
-                        </code>
-                    </pre> */}
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
                         <span style={{ padding: "20px" }}>
-                        <Button ariant="contained" color="primary" onClick={() => gotoPage(0)} disabled={!canPreviousPage}><SkipPreviousIcon /></Button>
-                        <Button ariant="contained" color="primary" onClick={() => previousPage()} disabled={!canPreviousPage}><ArrowBackIosIcon /></Button>
+                            <Button ariant="contained" color="primary" onClick={() => gotoPage(0)} disabled={!canPreviousPage}><SkipPreviousIcon /></Button>
+                            <Button ariant="contained" color="primary" onClick={() => previousPage()} disabled={!canPreviousPage}><ArrowBackIosIcon /></Button>
                             <strong>
                                 Page{' '}
                                 {pageIndex + 1} of {pageOptions.length}
@@ -203,26 +158,44 @@ export const PlayerTable = () => {
                                 }}
                                 style={{ padding: '0px', width: '50px', height: '20px' }}
                             />
-                        <Button ariant="contained" color="primary" onClick={() => nextPage()} disabled={!canNextPage}><ArrowForwardIosIcon /></Button>
-                        <Button ariant="contained" color="primary" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}><SkipNextIcon /></Button>
+                            <Button ariant="contained" color="primary" onClick={() => nextPage()} disabled={!canNextPage}><ArrowForwardIosIcon /></Button>
+                            <Button ariant="contained" color="primary" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}><SkipNextIcon /></Button>
 
-                        <strong>Page Size:{' '}</strong>
-                        <Select
-                            id="demo-simple-select-outlined"
-                            value={pageSize}
-                            style={{ padding: '0px', width: '50px', height: '20px' }}
-                            onChange={(e => setPageSize(Number(e.target.value)))}
+                            <strong>Page Size:{' '}</strong>
+                            <Select
+                                id="demo-simple-select-outlined"
+                                value={pageSize}
+                                style={{ padding: '0px', width: '50px', height: '20px' }}
+                                onChange={(e => setPageSize(Number(e.target.value)))}
                             >
-                            {
-                                [10, 25, 50].map(pageSize => (
-                                    <MenuItem key={pageSize} value={pageSize}>{pageSize}</MenuItem>
+                                {
+                                    [10, 25, 50].map(pageSize => (
+                                        <MenuItem key={pageSize} value={pageSize}>{pageSize}</MenuItem>
                                     ))
                                 }
-                        </Select>
-                                </span>
+                            </Select>
+                        </span>
                     </div>
                 </>
             </Container>
         </main>
     )
 }
+
+function PlayerTable() {
+
+    const [data, setData] = useState([]);
+    const columns = React.useMemo(() => COLUMNS, [])
+    useEffect(() => {
+        (async () => {
+            const result = await axios("http://localhost:8000/api/fifa/");
+            setData(result.data);
+        })();
+    }, []);
+
+    return (
+        <Table columns={columns} data={data} />
+    )
+}
+
+export default PlayerTable
