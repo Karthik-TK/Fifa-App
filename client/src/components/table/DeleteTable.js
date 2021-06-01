@@ -239,23 +239,6 @@ function DeleteTable() {
             })
     }
 
-    const deleteMyData = (rowIndex, columnId, value) => {
-
-        // setSkipPageReset(true)
-        console.log('ROW : ', rowIndex, columnId, value)
-        setTable(old =>
-            old.map((row, index) => {
-                if (index === rowIndex) {
-                    return {
-                        ...old[rowIndex],
-                        [columnId]: value,
-                    }
-                }
-                return row
-            })
-        )
-    }
-
     return (
         <Table columns={columns} data={tab} />
     )

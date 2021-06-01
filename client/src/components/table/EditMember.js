@@ -1,23 +1,22 @@
 import axios from 'axios';
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import './table.css';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import TextField from '@material-ui/core/TextField';
 import { GlobalFilter } from './GlobalFilter';
-import { useTable, useGlobalFilter, useSortBy, usePagination } from 'react-table'
-
-import MOCK_DATA from './MOCK_DATA.json'
+import { useTable, useGlobalFilter, usePagination } from 'react-table'
 import { COLUMNS } from './columns'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure()
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -96,7 +95,6 @@ const EditableCell = ({
     return <TextField value={value} onChange={onChange} onBlur={onBlur} />
 }
 
-// Set our editable cell renderer as the default Cell renderer
 const defaultColumn = {
     Cell: EditableCell,
 }
@@ -116,8 +114,6 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
         pageOptions,
         gotoPage,
         pageCount,
-        setPageSize,
-        rows,
         prepareRow,
         state,
         setGlobalFilter,
@@ -130,10 +126,8 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
         updateMyData,
     }, useGlobalFilter, usePagination)
 
-    const firstPageRows = rows.slice(0, 10)
     const { globalFilter, pageIndex } = state
 
-    // Render the UI for your table
     return (
         <main className={classes.content}>
             <div className={classes.appBarSpacer} />
@@ -157,7 +151,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
                             ))}
                         </thead>
                         <tbody {...getTableBodyProps()}>
-                            {firstPageRows.map((row, i) => {
+                            {page.map((row, i) => {
                                 prepareRow(row)
                                 return (
                                     <tr {...row.getRowProps()}>
@@ -189,7 +183,6 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
                             />
                             <Button ariant="contained" color="primary" onClick={() => nextPage()} disabled={!canNextPage}><ArrowForwardIosIcon /></Button>
                             <Button ariant="contained" color="primary" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}><SkipNextIcon /></Button>
-
                         </span>
                     </div>
                 </>
@@ -203,21 +196,29 @@ function EditMember() {
     const [data, setData] = useState([]);
     const [skipPageReset, setSkipPageReset] = React.useState(false)
     const columns = React.useMemo(() => COLUMNS, [])
-    // const [data, setData] = React.useState(() => MOCK_DATA, [])
     useEffect(() => {
         (async () => {
-          const result = await axios("http://localhost:8000/api/fifa/");
-          setData(result.data);
+            const result = await axios("http://localhost:8000/api/fifa/");
+            setData(result.data);
         })();
-      }, []);
+    }, []);
 
     const updateMyData = (rowIndex, columnId, value) => {
 
         setSkipPageReset(true)
         setData(old =>
             old.map((row, index) => {
-                console.log('ROW : ', old, row, 'Index : ', index, 'ROW Index : ', rowIndex, 'columnId : ',columnId, 'value : ',value)
                 if (index === rowIndex) {
+                    console.log(old[rowIndex].id)
+                    axios.patch(`http://localhost:8000/api/fifa/${old[rowIndex].id}/`, {
+                        [columnId]: value
+                    }).then(res => {
+                        toast.success('Player Info Updated!', { position: toast.POSITION.TOP_CENTER, autoClose: 8000 })
+                    })
+                        .catch(error => {
+                            console.log(error)
+                            toast.error('Error', { position: toast.POSITION.TOP_CENTER, autoClose: false })
+                        })
                     return {
                         ...old[rowIndex],
                         [columnId]: value,
