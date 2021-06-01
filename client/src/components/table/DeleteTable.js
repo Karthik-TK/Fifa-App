@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTable, useGlobalFilter, useRowSelect } from 'react-table';
-import MOCK_DATA from './MOCK_DATA.json';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -9,6 +8,10 @@ import { GlobalFilter } from './GlobalFilter';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './table.css';
 import { Checkbox } from './Checkbox';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure()
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,25 +64,103 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const DeleteTable = () => {
+function Table({ columns, data }) {
 
     const classes = useStyles();
-    const [tab, setTable] = useState([])
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+        selectedFlatRows,
+        state,
+        setGlobalFilter,
+    } = useTable({
+        columns,
+        data
+    }, useGlobalFilter, useRowSelect,
+        (hooks) => {
+            hooks.visibleColumns.push((columns) => {
+                return [
+                    {
+                        id: 'selection',
+                        Header: ({ getToggleAllRowsSelectedProps }) => (
+                            <Checkbox {...getToggleAllRowsSelectedProps()} />
+                        ),
+                        Cell: ({ row }) => (
+                            <Checkbox {...row.getToggleRowSelectedProps()} />
+                        )
+                    },
+                    ...columns
+                ]
+            })
+        })
 
-    useEffect(() => {
-        console.log("useEffect called");
-        async function loadData() {
-            await axios.get('http://localhost:8000/api/fifa/')
-                .then(res => {
-                    setTable(res.data)
-                    console.log(res.data, setTable())
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
-        loadData()
-    }, [])
+    const firstPageRows = rows.slice(0, 10)
+    const { globalFilter } = state
+
+    return (
+        <main className={classes.content}>
+            <div className={classes.appBarSpacer} />
+            <Container maxWidth="lg" className={classes.container}>
+                <>
+                    <Typography variant="h4" component="div" gutterBottom>
+                        Delete Players
+                    </Typography>
+                    <Typography variant="caption" display="block" gutterBottom>
+                        Search and Click on the player to delete.
+                    </Typography>
+                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+                    <table {...getTableProps()}>
+                        <thead>
+                            {headerGroups.map((headerGroup) => (
+                                <tr {...headerGroup.getHeaderGroupProps()}>
+                                    {headerGroup.headers.map((column) => (
+                                        <th {...column.getHeaderProps()}>
+                                            {column.render('Header')}
+                                        </th>
+                                    ))}
+                                </tr>
+                            ))}
+                        </thead>
+                        <tbody {...getTableBodyProps()}>
+                            {
+                                firstPageRows.map(row => {
+                                    prepareRow(row)
+                                    return (
+                                        <tr {...row.getRowProps()}>
+                                            {
+                                                row.cells.map((cell) => {
+                                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                                })
+                                            }
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                    {/* <pre>
+                        <code>
+                            {JSON.stringify(
+                                {
+                                    selectedFlatRows: selectedFlatRows.map((row) => row.original),
+                                },
+                                null,
+                                2
+                            )}
+                        </code>
+                    </pre> */}
+                </>
+            </Container >
+        </main >
+    )
+}
+
+function DeleteTable() {
+
+    const [tab, setTable] = useState([]);
 
     const COLUMNS = [
         {
@@ -126,13 +207,10 @@ export const DeleteTable = () => {
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <span style={{ cursor: 'pointer' }}
                         onClick={() => {
-                            // ES6 Syntax use the rvalue if your data is an array.
-                            // const dataCopy = [...tab];
-                            // It should not matter what you name tableProps. It made the most sense to me.
-                            // dataCopy.splice(tableProps.row.id, 1);
+                            const dataCopy = [...tab];
+                            dataCopy.splice(tableProps.row.index, 1);
+                            setTable(dataCopy);
                             deleteRow(tableProps.row.original.id)
-                            console.log(tableProps.row.original.id, tableProps.row.original)
-                            // setTable(dataCopy);
                         }}>
                         <DeleteIcon />
                     </span>
@@ -141,108 +219,46 @@ export const DeleteTable = () => {
         }
     ]
 
-    async function deleteRow(id) {
-        await axios.delete(`http://localhost:8000/api/fifa/${id}`,)
+    const columns = React.useMemo(() => COLUMNS, [])
+
+    useEffect(() => {
+        (async () => {
+            const result = await axios("http://localhost:8000/api/fifa/");
+            setTable(result.data);
+        })();
+    }, []);
+
+    function deleteRow(id) {
+        axios.delete(`http://localhost:8000/api/fifa/${id}/`,)
             .then(res => {
-                console.log("ID:", id, `http://localhost:8000/api/fifa/${id}`)
-                console.log(res)
-                setTable(res.data)
+                toast.success('Player Deleted!', { position: toast.POSITION.TOP_CENTER, autoClose: 8000 })
             })
             .catch(error => {
                 console.log(error)
+                toast.error('Error', { position: toast.POSITION.TOP_CENTER, autoClose: false })
             })
     }
 
-    const columns = useMemo(() => COLUMNS, [])
-    const data = useMemo(() => MOCK_DATA, [])
+    const deleteMyData = (rowIndex, columnId, value) => {
 
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-        selectedFlatRows,
-        state,
-        setGlobalFilter,
-    } = useTable({
-        columns,
-        data
-    }, useGlobalFilter, useRowSelect,
-        (hooks) => {
-            hooks.visibleColumns.push((columns) => {
-                return [
-                    {
-                        id: 'selection',
-                        Header: ({ getToggleAllRowsSelectedProps }) => (
-                            <Checkbox {...getToggleAllRowsSelectedProps()} />
-                        ),
-                        Cell: ({ row }) => (
-                            <Checkbox {...row.getToggleRowSelectedProps()} />
-                        )
-                    },
-                    ...columns
-                ]
+        // setSkipPageReset(true)
+        console.log('ROW : ', rowIndex, columnId, value)
+        setTable(old =>
+            old.map((row, index) => {
+                if (index === rowIndex) {
+                    return {
+                        ...old[rowIndex],
+                        [columnId]: value,
+                    }
+                }
+                return row
             })
-        })
-
-    const firstPageRows = rows.slice(0, 10)
-    const { globalFilter } = state
+        )
+    }
 
     return (
-        <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
-            <Container maxWidth="lg" className={classes.container}>
-                <>
-                    <Typography variant="h4" component="div" gutterBottom>
-                        Edit Players
-                    </Typography>
-                    <Typography variant="caption" display="block" gutterBottom>
-                        Search and Click on the player to delete.
-                    </Typography>
-                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-                    <table {...getTableProps()}>
-                        <thead>
-                            {headerGroups.map((headerGroup) => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map((column) => (
-                                        <th {...column.getHeaderProps()}>
-                                            {column.render('Header')}
-                                        </th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {
-                                firstPageRows.map(row => {
-                                    prepareRow(row)
-                                    return (
-                                        <tr {...row.getRowProps()}>
-                                            {
-                                                row.cells.map((cell) => {
-                                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                                })
-                                            }
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
-                    <pre>
-                        <code>
-                            {JSON.stringify(
-                                {
-                                    selectedFlatRows: selectedFlatRows.map((row) => row.original),
-                                },
-                                null,
-                                2
-                            )}
-                        </code>
-                    </pre>
-                </>
-            </Container >
-        </main >
+        <Table columns={columns} data={tab} />
     )
 }
+
+export default DeleteTable

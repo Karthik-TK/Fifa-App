@@ -34,7 +34,7 @@ import Dashboard from './Dashboard';
 import { PlayerTable } from './table/PlayerTable';
 import { ImportExport } from './export/ImportExport';
 import EditMember from './table/EditMember';
-import { DeleteTable } from './table/DeleteTable';
+import DeleteTable from './table/DeleteTable';
 import { NotFound } from './Errors';
 
 const drawerWidth = 240;

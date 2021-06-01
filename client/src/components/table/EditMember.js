@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState, useMemo } from 'react';
 import './table.css';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -92,7 +93,7 @@ const EditableCell = ({
         setValue(initialValue)
     }, [initialValue])
 
-    return <input value={value} onChange={onChange} onBlur={onBlur} />
+    return <TextField value={value} onChange={onChange} onBlur={onBlur} />
 }
 
 // Set our editable cell renderer as the default Cell renderer
@@ -100,7 +101,7 @@ const defaultColumn = {
     Cell: EditableCell,
 }
 
-function Table({ columns, data, updateMyData }) {
+function Table({ columns, data, updateMyData, skipPageReset }) {
 
     const classes = useStyles();
     const {
@@ -125,6 +126,7 @@ function Table({ columns, data, updateMyData }) {
         data,
         initialState: { pageIndex: 0 },
         defaultColumn,
+        autoResetPage: !skipPageReset,
         updateMyData,
     }, useGlobalFilter, usePagination)
 
@@ -197,13 +199,24 @@ function Table({ columns, data, updateMyData }) {
 }
 
 function EditMember() {
+
+    const [data, setData] = useState([]);
+    const [skipPageReset, setSkipPageReset] = React.useState(false)
     const columns = React.useMemo(() => COLUMNS, [])
-    const [data, setData] = React.useState(() => MOCK_DATA, [])
+    // const [data, setData] = React.useState(() => MOCK_DATA, [])
+    useEffect(() => {
+        (async () => {
+          const result = await axios("http://localhost:8000/api/fifa/");
+          setData(result.data);
+        })();
+      }, []);
 
     const updateMyData = (rowIndex, columnId, value) => {
 
+        setSkipPageReset(true)
         setData(old =>
             old.map((row, index) => {
+                console.log('ROW : ', old, row, 'Index : ', index, 'ROW Index : ', rowIndex, 'columnId : ',columnId, 'value : ',value)
                 if (index === rowIndex) {
                     return {
                         ...old[rowIndex],
@@ -216,7 +229,7 @@ function EditMember() {
     }
 
     return (
-        <Table columns={columns} data={data} updateMyData={updateMyData} />
+        <Table columns={columns} data={data} updateMyData={updateMyData} skipPageReset={skipPageReset} />
 
     )
 }
