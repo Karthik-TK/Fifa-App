@@ -1,18 +1,39 @@
-{% if messages %}
-    {% for message in messages %}
-        <div>
-            <strong>{{message|safe}}</strong><br>
+<!DOCTYPE html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>FIFA DATA UPLOAD</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-primary bg-primary">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">FIFA DATA UPLOAD</span>
         </div>
-    {% endfor %}
-{% else %}
-{{order}}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+    </nav>
     <br>
-    <b>Upload CSV Data file</b>
-    <br>
-    <br>
-    <input type="file" name="file">
-    <button type="submit">Upload</button>
-</form>
-{% endif %}
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div>
+                    <strong>{{message|safe}}</strong><br>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                {{order}}
+            </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <br>
+            <h4>Upload CSV Data file</h4>
+            <br>
+            <input type="file" name="file" class="btn btn-light">
+            <button type="submit" class="btn btn-outline-primary">Upload</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+
+</html>

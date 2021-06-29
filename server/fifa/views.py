@@ -2,7 +2,10 @@ import csv, io
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib import messages
-from .models import Fifa
+from .models import *
+from .serializers import *
+from rest_framework import status, viewsets
+from dynamic_rest.viewsets import DynamicModelViewSet
 
 # Create your views here.
 
@@ -23,7 +26,7 @@ def upload(request):
     template = 'data_upload.html'
 
     prompt = {
-        'order' : 'Order of the CSV should be player_id; name; nationality; position; overall; age; hits; potential; team'
+        'order' : 'Order of the CSV data should be player_id; name; nationality; position; overall; age; hits; potential; team'
     }
 
     if request.method == "GET":
@@ -50,3 +53,46 @@ def upload(request):
         )
     context = {}
     return render(request, template, context)
+
+class TournamentViewSet(viewsets.ModelViewSet):
+    """
+    A simple ViewSet for viewing and editing accounts.
+    """
+    serializer_class = TournamentSerializer
+    queryset = Tournament.objects.all()
+    # permission_classes = [IsAccountAdminOrReadOnly]
+
+class TeamViewSet(viewsets.ModelViewSet):
+    """
+    A simple ViewSet for viewing and editing accounts.
+    """
+    features = (
+        DynamicModelViewSet.INCLUDE, DynamicModelViewSet.EXCLUDE,
+        DynamicModelViewSet.FILTER, DynamicModelViewSet.SORT,
+        DynamicModelViewSet.SIDELOADING, DynamicModelViewSet.DEBUG
+    )
+    serializer_class = TeamSerializer
+    queryset = Team.objects.all()
+    # permission_classes = [IsAccountAdminOrReadOnly]
+
+class PlayerViewSet(viewsets.ModelViewSet):
+    """
+    A simple ViewSet for viewing and editing accounts.
+    """
+    serializer_class = PlayerSerializer
+    queryset = Player.objects.all()
+    # permission_classes = [IsAccountAdminOrReadOnly]
+
+class PlayerStatisticViewSet(DynamicModelViewSet):
+    """
+    A simple ViewSet for viewing and editing accounts.
+    """
+    features = (
+        DynamicModelViewSet.INCLUDE, DynamicModelViewSet.EXCLUDE,
+        DynamicModelViewSet.FILTER, DynamicModelViewSet.SORT,
+        DynamicModelViewSet.SIDELOADING, DynamicModelViewSet.DEBUG
+    )
+
+    serializer_class = PlayerStatisticSerializer
+    queryset = PlayerStatistic.objects.all()
+    # permission_classes = [IsAccountAdminOrReadOnly]

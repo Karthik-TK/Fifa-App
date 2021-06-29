@@ -15,12 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from routers import router
-from fifa.views import download, upload
+from fifa.views import *
+from rest_framework import routers
+from dynamic_rest.routers import DynamicRouter
+from fifa import views
+
+
+router = DynamicRouter()
+# router = routers.DefaultRouter()
+router.register_resource(views.TeamViewSet)
+router.register_resource(views.TournamentViewSet)
+router.register_resource(views.PlayerViewSet)
+router.register_resource(views.PlayerStatisticViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include((router.urls, 'factri'), namespace='factri')),
     path('download', download, name='download'),
-    path('upload', upload, name='upload')
+    path('upload', upload, name='upload'),
+    # path('team/', TeamViewSet, name='team'),
+    # path('player/', PlayerViewSet, name='player'),
+    # path('player_statistic/', PlayerStatisticViewSet, name='player_statistic'),
+    url(r'^', include(router.urls))
 ]
